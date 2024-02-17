@@ -1,4 +1,3 @@
-# GO TO RELEASES IN ORDER TO DOWNLOAD THE PROGRAM!!!
 ![logo](https://github.com/JinxTheCatto/Stellite/assets/59938808/0933bfe3-dbf1-43c8-9c00-d4c168a66944)
 
 # `Stellite, by Jinx`
@@ -33,7 +32,7 @@ With the customization comes tuning. In order to achieve the above results you M
 ![image (1)](https://github.com/JinxTheCatto/Stellite/assets/59938808/48f38ccf-3072-41d3-b832-703070346735)
 
 ## `Why is Stellite closed source?`
-I'd rather build my own community then have someone steal it and take credit, or even charge for it. If any antivirus flags this it's because of how pyinstaller works, if anyone has a better alternative do let me know. If you have questions regarding how the program works or want me to help you make your own for another platform, feel free to contact me in the server!
+I'd rather build my own community then have someone steal it and take credit, or even charge for it. You can always run it through VirusTotal. If you have questions regarding how the program works or want me to help you make your own for another platform, feel free to contact me in the server!
 
 Have fun bragging to your friends
 
