@@ -26,6 +26,9 @@ Press the tag below to join the discord for help, config explanations, feature r
 - Gain massive amounts of free Season Levels for the battle pass via the Try Fortnite Festival quest line!
 - Get massive amounts of Festival Points via the Jam and Main Stage: Daily, Weekly, and Milestone quest lines and claim your free rewards!
 
+## `Usage`
+Stellite was built on python 3.10.6, so I recommend you install the same version. For first use, make sure your Festival keybinds are set to (in expert) D, F, J, K, L. I would see if the default setting work fine for you and simply run the start.bat script, or you can run bot.py directly if desired. After altering the config file, you must restart the program for changes to take effect.
+
 ## `IMPORTANT:`
 With the customization comes tuning. In order to achieve the above results you MAY have to fine tune some of the values in the configuration file in order to achieve those results, depending on your resolution, processing speed, and refresh rate. The default config out of the box comes with the config which nets me the above results on my fast pc outputting on a 144hz 1080p display. The good news is, Stellite has a toggleable debug window which will help you easily tune your settings to match my best performance!
 
