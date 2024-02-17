@@ -3,6 +3,7 @@
 
 # `Stellite, by Jinx`
 It has nothing to do with tungsten alloys
+
 Join the discord for help, config explanations, feature requests and bug reports
 
 [![Discord](https://img.shields.io/discord/1203788041693429820?style=for-the-badge&color=7289da&logo=discord&logoColor=white)](https://discord.gg/bkWf3AqrEY)
