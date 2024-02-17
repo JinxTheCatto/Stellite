@@ -1,7 +1,8 @@
-# GO TO RELEASES IN ORDER TO DOWNLOAD THE PROGRAM!
+# GO TO RELEASES IN ORDER TO DOWNLOAD THE PROGRAM!!!
 ![logo](https://github.com/JinxTheCatto/Stellite/assets/59938808/0933bfe3-dbf1-43c8-9c00-d4c168a66944)
 
 # `Stellite, by Jinx`
+It has nothing to do with tungsten alloys
 Join the discord for help, config explanations, feature requests and bug reports
 
 [![Discord](https://img.shields.io/discord/1203788041693429820?style=for-the-badge&color=7289da&logo=discord&logoColor=white)](https://discord.gg/bkWf3AqrEY)
