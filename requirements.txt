@@ -1,0 +1,12 @@
+bettercam
+colorama
+customtkinter
+discord
+keyboard
+numpy
+opencv-python
+psutil
+pyarmor
+pyautogui
+pywin32
+requests
