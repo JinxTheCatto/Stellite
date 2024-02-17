@@ -1,15 +1,15 @@
 ![logo](https://github.com/JinxTheCatto/Stellite/assets/59938808/0933bfe3-dbf1-43c8-9c00-d4c168a66944)
 
 # `Stellite, by Jinx`
-It has nothing to do with tungsten alloys
 
-Join the discord for help, config explanations, feature requests and bug reports
+Press the tag below to join the discord for help, config explanations, feature requests and bug reports
 
 [![Discord](https://img.shields.io/discord/1203788041693429820?style=for-the-badge&color=7289da&logo=discord&logoColor=white)](https://discord.gg/bkWf3AqrEY)
 
 ## `What is Stellite?`
 ### Stellite is the world's ~~worst~~ first Fortnite Festival autoplayer, with high customizability and precision
-[![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)]([https://forthebadge.com](https://discord.gg/bkWf3AqrEY)) [![forthebadge](https://forthebadge.com/images/badges/ctrl-c-ctrl-v.svg)](https://discord.gg/bkWf3AqrEY) [![forthebadge](https://forthebadge.com/images/badges/eicar-antivirus-test-string.svg)]([https://forthebadge.com](https://discord.gg/bkWf3AqrEY))
+
+[![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)]([https://forthebadge.com](https://discord.gg/bkWf3AqrEY)) [![forthebadge](https://forthebadge.com/images/badges/ctrl-c-ctrl-v.svg)](https://discord.gg/bkWf3AqrEY)
 
 ## `What are the limitations?`
 - Stellite cannot play click and drag notes, MEANING STELLITE CAN ONLY PLAY WELL ON THE DRUMS!
