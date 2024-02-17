@@ -31,8 +31,7 @@ Join the discord for help, config explanations, feature requests and bug reports
 With the customization comes tuning. In order to achieve the above results you MAY have to fine tune some of the values in the configuration file in order to achieve those results, depending on your resolution, processing speed, and refresh rate. The default config out of the box comes with the config which nets me the above results on my fast pc outputting on a 144hz 1080p display. The good news is, Stellite has a toggleable debug window which will help you easily tune your settings to match my best performance!
 
 ![image (1)](https://github.com/JinxTheCatto/Stellite/assets/59938808/48f38ccf-3072-41d3-b832-703070346735)
----
----
+
 # Why is Stellite closed source?
 I'd rather build my own community then have someone steal it and take credit. If you have questions regarding how the program works or want me to help you make your own for another platform, feel free to contact me in the server!
 
