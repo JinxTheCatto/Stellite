@@ -32,7 +32,7 @@ With the customization comes tuning. In order to achieve the above results you M
 
 ![image (1)](https://github.com/JinxTheCatto/Stellite/assets/59938808/48f38ccf-3072-41d3-b832-703070346735)
 
-# Why is Stellite closed source?
+# `Why is Stellite closed source?`
 I'd rather build my own community then have someone steal it and take credit. If you have questions regarding how the program works or want me to help you make your own for another platform, feel free to contact me in the server!
 
 Have fun bragging to your friends
