@@ -1,15 +1,14 @@
 # GO TO RELEASES IN ORDER TO DOWNLOAD THE PROGRAM!
-
-# `Stellite, by Jinx`
 ![logo](https://github.com/JinxTheCatto/Stellite/assets/59938808/0933bfe3-dbf1-43c8-9c00-d4c168a66944)
 
+# `Stellite, by Jinx`
 Join the discord for help, config explanations, feature requests and bug reports
 
 [![Discord](https://img.shields.io/discord/1203788041693429820?style=for-the-badge&color=7289da&logo=discord&logoColor=white)](https://discord.gg/bkWf3AqrEY)
 
 ## `What is Stellite?`
 ### Stellite is the world's ~~worst~~ first Fortnite Festival autoplayer, with high customizability and precision
-[![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/ctrl-c-ctrl-v.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/eicar-antivirus-test-string.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)]([https://forthebadge.com](https://discord.gg/bkWf3AqrEY)) [![forthebadge](https://forthebadge.com/images/badges/ctrl-c-ctrl-v.svg)](https://discord.gg/bkWf3AqrEY) [![forthebadge](https://forthebadge.com/images/badges/eicar-antivirus-test-string.svg)]([https://forthebadge.com](https://discord.gg/bkWf3AqrEY))
 
 ## `What are the limitations?`
 - Stellite cannot play click and drag notes, MEANING STELLITE CAN ONLY PLAY WELL ON THE DRUMS!
@@ -22,7 +21,7 @@ Join the discord for help, config explanations, feature requests and bug reports
 - Stellite will place top 500 to top 10000 worldwide depending on how many exploited/hacked scores there are in your songs leaderboard (you will often be 40k score below the top 10 players, even having played the song perfectly)
 - Stellite is completely undetectable, not much epic can do other then block the win32 api anyway
 
-### Fortnite benefits:
+### Account benefits:
 - Gain massive amounts of free Season Levels for the battle pass via the Try Fortnite Festival quest line!
 - Get massive amounts of Festival Points via the Jam and Main Stage: Daily, Weekly, and Milestone quest lines and claim your free rewards!
 
@@ -31,7 +30,7 @@ With the customization comes tuning. In order to achieve the above results you M
 
 ![image (1)](https://github.com/JinxTheCatto/Stellite/assets/59938808/48f38ccf-3072-41d3-b832-703070346735)
 ---
-
+---
 Have fun bragging to your friends
 
 ![tenor](https://github.com/JinxTheCatto/Stellite/assets/59938808/f8d9a998-575e-4e94-baa3-dad5102d9f5e)
