@@ -7,6 +7,7 @@
     "keypress_holdtime": 0.03,
     "capture_fps": 120,
     "color_mode": "gray",
+    "viewbox_bgra_color_override": "false",
 
     "always_single_lanemode": "true",
     "single_lanemode_lanes": 5
