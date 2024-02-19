@@ -9,6 +9,8 @@ Press the button below to join the discord for help, config explanations, featur
 ## What is Stellite?
 Stellite is the world's first Fortnite Festival autoplayer, with high customizability and a useful featureset.
 
+You can [see it in action here](https://www.youtube.com/watch?v=2ho50fxCqPs)
+
 ## Limitations
 - Stellite can only play well on the drums and cannot play click and drag notes.
 - Stellite only hits 'perfect' notes (the diamonds) by random chance and may miss notes that are too far out. This is a problem on 1-3 songs
