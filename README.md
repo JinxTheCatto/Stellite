@@ -25,14 +25,17 @@ Stellite is the world's first Fortnite Festival autoplayer, with high customizab
 - Earn Festival Points and claim free rewards through various quest lines.
 
 ## Usage
-- Use Python 3.10.6.
-- Set your Fortnite Festival keybinds to D, F, J, K, L (the default two hands A preset).
-- Run the start.bat script or bot.py directly.
-- Restart the program after altering the config file, if needed.
+- Use Python 3.10.6 as that's what it was tested on.
+- Set your Fortnite Festival keybinds to D, F, J, K, L (the default two hands A preset)
+- Use the setup.bat file to install dependencies
+- Run the start.bat script or bot.py directly
+- Restart the program after altering the config file, if needed
 - Join the discord for the config values explanation
 
-## IMPORTANT
-Fine-tune the configuration values to achieve optimal results based on your resolution, processing speed, and refresh rate. Use the debug window for assistance.
+## IMPORTANT NOTES
+Currently the only built in match images are for 1440p, 1080p, and 768p, if you have a different resolution you must either make your own images matching those in the assets folder with those that suite your game or contact me on the discord to do it for you, and help me add support to mose resolutions
+
+To play songs flawlessly you will most likely have to fine-tune the configuration values to achieve optimal results based on your resolution, processing speed, and refresh rate. Use the debug window for assistance.
 
 ![image (1)](https://github.com/JinxTheCatto/Stellite/assets/59938808/48f38ccf-3072-41d3-b832-703070346735)
 
