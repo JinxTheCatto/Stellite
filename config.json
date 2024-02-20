@@ -2,12 +2,16 @@
     "min_confidence": 0.75,
     "min_tile_pixels_top_offset": 110,
     "tile_filename_suffix": "",
-    "show_debug_visuals": "true",
     "exit_key": "p",
     "keypress_holdtime": 0.03,
+    
+    "show_debug_visuals": "true",
     "capture_fps": 120,
     "color_mode": "gray",
     "viewbox_bgra_color_override": "false",
+    
+    "use_lane_cooldown": "true",
+    "max_lane_cooldown": 0.0075,
 
     "always_single_lanemode": "true",
     "single_lanemode_lanes": 5
