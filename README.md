@@ -28,6 +28,7 @@ You can [see it in action here](https://www.youtube.com/watch?v=2ho50fxCqPs)
 
 ## Usage
 - Use Python 3.10.6 as that's what it was tested on.
+- Play Fortnite on windowed fullscreen, and preferably low quality rendering mode (this makes brightness match with what the match images use)
 - Set your Fortnite Festival keybinds to D, F, J, K, L (the default two hands A preset)
 - Use the setup.bat file to install dependencies
 - Run the start.bat script or bot.py directly
