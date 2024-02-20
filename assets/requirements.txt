@@ -1,7 +1,6 @@
 bettercam
 colorama
-customtkinter
-discord
+requests
 keyboard
 numpy
 opencv-python
@@ -9,4 +8,3 @@ psutil
 pyarmor
 pyautogui
 pywin32
-requests
