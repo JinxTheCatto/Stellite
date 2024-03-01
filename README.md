@@ -14,7 +14,7 @@ You can [see it in action here](https://www.youtube.com/watch?v=2ho50fxCqPs)
 ## Limitations
 - Stellite can only play well on the drums
 - Stellite only hits double tap notes (the diamonds) by random chance and may miss notes that are too far out. This is a problem on 1-3 songs, but your chances can be greatly increased by setting your ingame settings to the recommended ones.
-- Stellite universally supports 16:9 resolutions, but higher resolutions than 1440 require additional support due to the lack of match images. Contact me for further assistance or make your own according to the naming scheme in the assets folder
+- Stellite supports most standard resolutions, but higher resolutions than 1440 require additional support due to the lack of match images. Contact me for further assistance or make your own according to the naming scheme in the assets folder
 
 ## Benefits
 ### Performance benefits:
