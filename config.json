@@ -1,7 +1,7 @@
 {
-    "min_confidence": 0.73,
+    "min_confidence": 0.72,
     "min_tile_pixels_top_offset": 100,
-    "tile_filename_suffix": "",
+    "tile_filename_suffix": "highcontrast",
     "exit_key": "p",
     "keypress_holdtime": 0.05,
     
@@ -11,8 +11,17 @@
     "viewbox_bgra_color_override": "false",
     
     "use_lane_cooldown": "true",
-    "max_lane_cooldown": 0.0075,
+    "max_lane_cooldown": 0.01,
 
     "always_single_lanemode": "true",
-    "single_lanemode_lanes": 5
+    "single_lanemode_lanes": 5,
+
+    "key_1": "d",
+    "key_2": "f",
+    "key_3": "j",
+    "key_4": "k",
+    "key_5": "l",
+
+    "detect_diamond_tiles": "false",
+    "diamond_tiles_min_confidence": 0.95
 }
