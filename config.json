@@ -1,6 +1,6 @@
 {
-    "min_confidence": 0.72,
-    "min_tile_pixels_top_offset": 100,
+    "min_confidence": 0.716,
+    "min_tile_pixels_top_offset": 105,
     "tile_filename_suffix": "highcontrast",
     "exit_key": "p",
     "keypress_holdtime": 0.05,
@@ -11,7 +11,7 @@
     "viewbox_bgra_color_override": "false",
     
     "use_lane_cooldown": "true",
-    "max_lane_cooldown": 0.01,
+    "max_lane_cooldown": 0.04,
 
     "always_single_lanemode": "true",
     "single_lanemode_lanes": 5,
