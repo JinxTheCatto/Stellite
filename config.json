@@ -1,7 +1,7 @@
 {
     "min_confidence": 0.716,
     "min_tile_pixels_top_offset": 105,
-    "tile_filename_suffix": "",
+    "tile_filename_suffix": "highcontrast",
     "exit_key": "p",
     "keypress_holdtime": 0.05,
     
