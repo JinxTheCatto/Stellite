@@ -1,12 +1,12 @@
 {
     "min_confidence": 0.716,
     "min_tile_pixels_top_offset": 105,
-    "tile_filename_suffix": "highcontrast",
+    "tile_filename_suffix": "",
     "exit_key": "p",
     "keypress_holdtime": 0.05,
     
     "show_debug_visuals": "true",
-    "capture_fps": 160,
+    "capture_fps": 120,
     "color_mode": "gray",
     "viewbox_bgra_color_override": "false",
     
