@@ -4,7 +4,7 @@
 
 Press the button below to join the discord for help, config explanations, feature requests, and bug reports
 
-[![Discord](https://img.shields.io/discord/1203788041693429820?style=for-the-badge&color=7289da&logo=discord&logoColor=white)](https://discord.gg/bkWf3AqrEY)
+[![discord server](https://dcbadge.vercel.app/api/server/bkWf3AqrEY)](https://discord.gg/bkWf3AqrEY)
 
 ## What is Stellite?
 Stellite is the world's first Fortnite Festival autoplayer, with high customizability and a useful featureset.
