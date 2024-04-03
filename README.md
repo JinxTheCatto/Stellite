@@ -41,7 +41,7 @@ To play songs flawlessly you will most likely have to fine-tune the configuratio
 ![image (1)](https://github.com/JinxTheCatto/Stellite/assets/59938808/48f38ccf-3072-41d3-b832-703070346735)
 
 ## Why is Stellite closed source?
-Stellite is psuedo closed source to protect against theft and unauthorized distribution, and you can always run it through VirusTotal. I will release the full source some time in the future, but If you have questions regarding how the program works or want me to help you make your own for another platform, I'd love to! feel free to contact me in the server
+Stellite is now open source :3
 
 [![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)]([https://forthebadge.com](https://discord.gg/bkWf3AqrEY)) [![forthebadge](https://forthebadge.com/images/badges/ctrl-c-ctrl-v.svg)](https://discord.gg/bkWf3AqrEY) [![forthebadge](https://forthebadge.com/images/badges/works-on-my-machine.svg)]([https://forthebadge.com](https://discord.gg/bkWf3AqrEY))
 
