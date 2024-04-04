@@ -23,8 +23,5 @@
     "key_5": "l",
 
     "detect_diamond_tiles": "false",
-    "diamond_tiles_min_confidence": 0.95,
-
-    "detect_hold_tiles": "false",
-    "hold_tiles_min_confidence_difference": 0.1
+    "diamond_tiles_min_confidence": 0.95
 }
