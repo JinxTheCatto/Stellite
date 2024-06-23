@@ -1,6 +1,6 @@
 # TODO:
-# hold notes
-# gui
+# Hold notes
+# Gui
 
 try:
     import pyautogui
@@ -61,7 +61,7 @@ for filename in os.listdir("assets"):
         imagefound = True
         break
 if not imagefound:
-    print(Back.RED + Fore.WHITE + "No match image in the assets folder found with the current monitor height! Please make sure you have an image made, or contact me in the discord to help me add support!" + Back.RESET + Fore.RESET)
+    print(Back.RED + Fore.WHITE + "No match image in the assets folder found with the current monitor height! Please make sure you have an image made" + Back.RESET + Fore.RESET)
     exit()
 
 tile_filenames = [
