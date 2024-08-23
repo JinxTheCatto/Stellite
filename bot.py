@@ -115,11 +115,12 @@ section_size = region_width // number_of_lanes
 
 maincamera = bettercam.create(output_color = ("GRAY" if config["color_mode"] == "gray" else "BGRA"), max_buffer_len=512)
 maincamera.start(region = (region_fromleft, region_fromtop, width, height), target_fps=config["capture_fps"])
-cv2.namedWindow('Stellite Autoplayer View')
-cv2.resizeWindow('Stellite Autoplayer View', region_width, region_height)
-cv2.moveWindow('Stellite Autoplayer View', (monitor_width - region_width) - 10, 0)
-cv2.setWindowProperty('Stellite Autoplayer View', cv2.WINDOW_FREERATIO, 0)
-cv2.setWindowProperty('Stellite Autoplayer View', cv2.WND_PROP_TOPMOST, 1)
+if config["show_debug_visuals"] == "true":
+    cv2.namedWindow('Stellite Autoplayer View')
+    cv2.resizeWindow('Stellite Autoplayer View', region_width, region_height)
+    cv2.moveWindow('Stellite Autoplayer View', (monitor_width - region_width) - 10, 0)
+    cv2.setWindowProperty('Stellite Autoplayer View', cv2.WINDOW_FREERATIO, 0)
+    cv2.setWindowProperty('Stellite Autoplayer View', cv2.WND_PROP_TOPMOST, 1)
 
 lane_cooldowns = {
     str(config["key_1"]): 0.0,
