@@ -1,17 +1,19 @@
 {
-    "min_confidence": 0.716,
-    "min_tile_pixels_top_offset": 105,
+    "min_confidence": 0.756,
+    "min_tile_pixels_top_offset_scaled": 106,
     "tile_filename_suffix": "",
     "exit_key": "p",
     "keypress_holdtime": 0.05,
     
-    "show_debug_visuals": "true",
-    "capture_fps": 120,
+    "show_debug_visuals": "false",
+    "console_window_ontop": "false",
+    "capture_fps": 144,
     "color_mode": "gray",
+    "use_white_tile": "true",
     "viewbox_bgra_color_override": "false",
     
     "use_lane_cooldown": "true",
-    "max_lane_cooldown": 0.04,
+    "max_lane_cooldown": 0.06,
 
     "always_single_lanemode": "true",
     "single_lanemode_lanes": 5,

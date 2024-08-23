@@ -20,7 +20,7 @@ You can [see an early version in action here](https://www.youtube.com/watch?v=2h
 ### Performance benefits:
 - Stellite can play the large majority of songs flawlessly on any difficulty, including expert.
 - Stellite can achieve high rankings worldwide, even first place, depending on the presence of exploited scores for that song. Please keep in mind that overdrive routes are important if you want to achieve podium positions.
-- Stellite does not trigger the anticheat and I doubt it ever will.
+- Stellite does not trigger the anticheat and it never will unless EAC goes the valorant route.
 
 ### Account benefits:
 - Gain free Season Levels for the battle pass via the Try Fortnite Festival quest line.
