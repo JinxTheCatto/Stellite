@@ -220,6 +220,8 @@ while not keyboard.is_pressed(config['exit_key']):
 # STOP
 cv2.destroyAllWindows()
 maincamera.stop()
+if config["console_window_ontop"] == "true":
+    win32gui.SetWindowPos(hwnd, win32con.HWND_NOTOPMOST, 0, 0, 0, 0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
 
-# Simply exit without resetting the window position
+# S
 print(Fore.WHITE + Back.RED + "Stop key pressed. Exiting Stellite..." + Fore.RESET + Back.RESET)
