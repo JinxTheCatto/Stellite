@@ -2,58 +2,71 @@
 # The source is under a AGPL-3.0 License, although I suspect you know that.
 # If you try to sell this code, release it as closed source, or don't give credit to me and Stellite, as I already have been doing, I will take it down.
 
-try:
-    import pyautogui
-    import time
-    import keyboard
-    import cv2
-    import numpy as np
-    import bettercam
-    import ctypes
-    from colorama import Fore, Back, Style
-    import os
-    import json
-    import threading
-    import win32api
-    import win32gui
-    import win32con
-    #import customtkinter as ctk
-except Exception as e:
-    print(Back.RED + Fore.WHITE + "ERROR: error importing modules! This probably means the setup.bat script failed. Try running it again or join the server if it returns an error." + Back.RESET + Fore.RESET)
+import pyautogui
+import time
+import keyboard
+import cv2
+import numpy as np
+import bettercam
+import ctypes
+from colorama import Fore, Back, Style
+import os
+import json
+import threading
+import win32api
+import win32gui
+import win32con
 
-# GUI code later?
-
+# Set console title
 os.system("title Stellite Autoplayer Console")
-config = json.load(open("config.json", "r"))
+
+# Clear the console
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
 cls()
+
+# Load configuration
+try:
+    config = json.load(open("config.json", "r"))
+except Exception as e:
+    print(Back.RED + Fore.WHITE + f"ERROR: Failed to load configuration file. {str(e)}" + Back.RESET + Fore.RESET)
+    exit()
+
 monitor_width = ctypes.windll.user32.GetSystemMetrics(0)
 monitor_height = ctypes.windll.user32.GetSystemMetrics(1)
 
-if config["console_window_ontop"] == "true":
-    def get_shell():
-        hwndlist = []
-        def findit(hwnd,ctx):
-            if win32gui.GetWindowText(hwnd).find("Stellite Autoplayer Console") != -1:
-                hwndlist.append(hwnd)
+# Ensure console window is on top
+hwnd = None  # Global variable to store the console window handle
 
-        win32gui.EnumWindows(findit,None)
-        return hwndlist
+def keep_console_on_top():
+    global hwnd
+    hwndlist = []
+    def findit(hwnd, ctx):
+        if win32gui.GetWindowText(hwnd).find("Stellite Autoplayer Console") != -1:
+            hwndlist.append(hwnd)
+    win32gui.EnumWindows(findit, None)
+    if len(hwndlist) == 1:
+        hwnd = hwndlist[0]
+        try:
+            win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
+        except Exception as e:
+            print(Back.RED + Fore.WHITE + f"ERROR: {str(e)} while setting window position." + Back.RESET + Fore.RESET)
+    else:
+        print(Back.RED + Fore.WHITE + "ERROR: Console window handle not found or multiple windows detected." + Back.RESET + Fore.RESET)
 
-    hwnd = get_shell()[0]
-    assert len(get_shell()) == 1, Back.RED + Fore.WHITE + "ERROR: Either multiple or no stellite console windows found." + Back.RESET + Fore.RESET
-    win32gui.SetWindowPos(hwnd,win32con.HWND_TOPMOST,0,200,800,500,0)
+# Call once if necessary
+if config.get("console_window_ontop") == "true":
+    keep_console_on_top()
 
 # START
 print(f'''
-{Fore.RED + Style.NORMAL}      :::::::: {Fore.YELLOW}::::::::::: {Fore.YELLOW + Style.BRIGHT}:::::::::: {Fore.GREEN + Style.NORMAL}:::        {Fore.CYAN}:::        {Fore.BLUE}::::::::::: {Fore.MAGENTA}::::::::::: {Fore.MAGENTA + Style.BRIGHT}:::::::::: 
-{Fore.RED + Style.NORMAL}    :+:    :+:    {Fore.YELLOW}:+:     {Fore.YELLOW + Style.BRIGHT}:+:        {Fore.GREEN + Style.NORMAL}:+:        {Fore.CYAN}:+:            {Fore.BLUE}:+:         {Fore.MAGENTA}:+:     {Fore.MAGENTA + Style.BRIGHT}:+:         
-{Fore.RED + Style.NORMAL}   +:+           {Fore.YELLOW}+:+     {Fore.YELLOW + Style.BRIGHT}+:+        {Fore.GREEN + Style.NORMAL}+:+        {Fore.CYAN}+:+            {Fore.BLUE}+:+         {Fore.MAGENTA}+:+     {Fore.MAGENTA + Style.BRIGHT}+:+          
-{Fore.RED + Style.NORMAL}  +#++:++#++    {Fore.YELLOW}+#+     {Fore.YELLOW + Style.BRIGHT}+#++:++#   {Fore.GREEN + Style.NORMAL}+#+        {Fore.CYAN}+#+            {Fore.BLUE}+#+         {Fore.MAGENTA}+#+     {Fore.MAGENTA + Style.BRIGHT}+#++:++#      
-{Fore.RED + Style.NORMAL}        +#+    {Fore.YELLOW}+#+     {Fore.YELLOW + Style.BRIGHT}+#+        {Fore.GREEN + Style.NORMAL}+#+        {Fore.CYAN}+#+            {Fore.BLUE}+#+         {Fore.MAGENTA}+#+     {Fore.MAGENTA + Style.BRIGHT}+#+            
-{Fore.RED + Style.NORMAL}#+#    #+#    {Fore.YELLOW}#+#     {Fore.YELLOW + Style.BRIGHT}#+#        {Fore.GREEN + Style.NORMAL}#+#        {Fore.CYAN}#+#            {Fore.BLUE}#+#         {Fore.MAGENTA}#+#     {Fore.MAGENTA + Style.BRIGHT}#+#             
-{Fore.RED + Style.NORMAL}########     {Fore.YELLOW}###     {Fore.YELLOW + Style.BRIGHT}########## {Fore.GREEN + Style.NORMAL}########## {Fore.CYAN}########## {Fore.BLUE}###########     {Fore.MAGENTA}###     {Fore.MAGENTA + Style.BRIGHT}##########                      
+{Fore.RED}      :::::::: {Fore.YELLOW}::::::::::: {Fore.YELLOW}:::::::::: {Fore.GREEN}:::        {Fore.CYAN}:::        {Fore.BLUE}::::::::::: {Fore.MAGENTA}::::::::::: {Fore.MAGENTA}:::::::::: 
+{Fore.RED}    :+:    :+:    {Fore.YELLOW}:+:     {Fore.YELLOW}:+:        {Fore.GREEN}:+:        {Fore.CYAN}:+:            {Fore.BLUE}:+:         {Fore.MAGENTA}:+:     {Fore.MAGENTA}:+:         
+{Fore.RED}   +:+           {Fore.YELLOW}+:+     {Fore.YELLOW}+:+        {Fore.GREEN}+:+        {Fore.CYAN}+:+            {Fore.BLUE}+:+         {Fore.MAGENTA}+:+     {Fore.MAGENTA}+:+          
+{Fore.RED}  +#++:++#++    {Fore.YELLOW}+#+     {Fore.YELLOW}+#++:++#   {Fore.GREEN}+#+        {Fore.CYAN}+#+            {Fore.BLUE}+#+         {Fore.MAGENTA}+#+     {Fore.MAGENTA}+#++:++#      
+{Fore.RED}        +#+    {Fore.YELLOW}+#+     {Fore.YELLOW}+#+        {Fore.GREEN}+#+        {Fore.CYAN}+#+            {Fore.BLUE}+#+         {Fore.MAGENTA}+#+     {Fore.MAGENTA}+#+            
+{Fore.RED}#+#    #+#    {Fore.YELLOW}#+#     {Fore.YELLOW}#+#        {Fore.GREEN}#+#        {Fore.CYAN}#+#            {Fore.BLUE}#+#         {Fore.MAGENTA}#+#     {Fore.MAGENTA}#+#             
+{Fore.RED}########     {Fore.YELLOW}###     {Fore.YELLOW}########## {Fore.GREEN}########## {Fore.CYAN}########## {Fore.BLUE}###########     {Fore.MAGENTA}###     {Fore.MAGENTA}##########                      
 ''')
 
 print(Style.RESET_ALL + Fore.RED + "The first and best Fortnite Festival autoplayer")
@@ -64,7 +77,9 @@ if not config["always_single_lanemode"] == "true":
     number_of_lanes = int(input("Number of lanes (4 = easy-hard, 5 = expert): "))
 else:
     number_of_lanes = config["single_lanemode_lanes"]
+
 assert number_of_lanes in [4, 5], Back.RED + Fore.WHITE + "Number of lanes must be 4 or 5" + Back.RESET + Fore.RESET
+
 print(Fore.GREEN + f"WILL ONLY AUTOPLAY WHILE CAPS LOCK IS ON! CURRENT CAPSLOCK STATUS: " + ("On" if win32api.GetKeyState(0x14) else "Off"))
 print(Fore.YELLOW + f"Capture region color mode: {config['color_mode']}" + Fore.RESET)
 print(Fore.YELLOW + f"Viewbox color mode: {config['color_mode']}")
@@ -110,7 +125,7 @@ height = region_fromtop + region_height
 section_size = region_width // number_of_lanes
 
 #if config["viewbox_bgra_color_override"] == "true":
-    #viewboxcamera = bettercam.create(output_color="BGRA", max_buffer_len=512)
+    #viewboxcamera = bettercam.create(output_color="BGRA", max buffer_len=512)
     #viewboxcamera.start(region=(region_fromleft, region_fromtop, width, height), target_fps=60)
 
 maincamera = bettercam.create(output_color = ("GRAY" if config["color_mode"] == "gray" else "BGRA"), max_buffer_len=512)
@@ -137,8 +152,8 @@ def cooldown(key):
 
 def press(key, hold = False):
     print(Fore.GREEN + f"{time.time()}: Pressing {key}" + Fore.RESET)
-    #if keyboard.is_pressed(key): 
-    #   keyboard.release(key)
+    # if keyboard.is_pressed(key): 
+    #    keyboard.release(key)
     keyboard.press(key)
     time.sleep(config["keypress_holdtime"])
     keyboard.release(key)
@@ -146,7 +161,7 @@ def press(key, hold = False):
 
 def press_tile(key, hold = False):
     if lane_cooldowns[key] == 0.0:
-        threading.Thread(target=press, args=(key,hold)).start()
+        threading.Thread(target=press, args=(key, hold)).start()
     else:
         print(Fore.RED + f"Skipping lane {key} due to cooldown" + Fore.RESET)
 
@@ -154,7 +169,7 @@ while not keyboard.is_pressed(config['exit_key']):
     screenshot_np = maincamera.get_latest_frame()
     capslock_status = win32api.GetKeyState(0x14)
     if capslock_status and screenshot_np is not None:
-        for tile_image in tile_images: # this could use multithreading
+        for tile_image in tile_images:  # this could use multithreading
             tile_image = tile_image.astype(screenshot_np.dtype)
             tilewidth = tile_image.shape[1]
             tileheight = tile_image.shape[0]
@@ -205,8 +220,6 @@ while not keyboard.is_pressed(config['exit_key']):
 # STOP
 cv2.destroyAllWindows()
 maincamera.stop()
-if config["console_window_ontop"] == "true":
-    win32gui.SetWindowPos(hwnd,win32con.HWND_NOTOPMOST,0,200,800,500,0)
 
-#cls()
+# Simply exit without resetting the window position
 print(Fore.WHITE + Back.RED + "Stop key pressed. Exiting Stellite..." + Fore.RESET + Back.RESET)
