@@ -1,5 +1,5 @@
 # `Stellite, by Jinx`
-`THIS PROJECT IS LICENSED UNDER AGPL-3`
+`THIS PROJECT IS LICENSED UNDER AGPL-3` 
 
 ![logo](https://github.com/JinxTheCatto/Stellite/assets/59938808/0933bfe3-dbf1-43c8-9c00-d4c168a66944)
 
