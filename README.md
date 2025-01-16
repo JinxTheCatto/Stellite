@@ -13,7 +13,7 @@ Stellite is the world's first Fortnite Festival autoplayer, with high customizab
 You can [see an early version in action here](https://www.youtube.com/watch?v=2ho50fxCqPs)
 
 ## Limitations
-- Stellite plays best on the drums due to not being able to play most hold notes 
+- Stellite plays best on the drums due to not being able to play most hold notes
 - Stellite supports most standard resolutions, but higher resolutions than 1440 require additional support due to the lack of match images, and you will need to make your own according to the naming scheme in the assets folder. There will be a video of how to do this soon.
 
 ## Benefits
