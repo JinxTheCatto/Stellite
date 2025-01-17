@@ -2,7 +2,6 @@
 # The source is under a AGPL-3.0 License, although I suspect you know that.
 # If you try to sell this code, release it as closed source, or don't give credit to me and Stellite, as I already have been doing, I will take it down.
 
-import pyautogui
 import time
 import keyboard
 import cv2
@@ -109,7 +108,7 @@ tile_images = [cv2.imread(tile_filename, (cv2.IMREAD_GRAYSCALE if config["color_
 # 1080p values:
 region_width = 555 if number_of_lanes == 4 else 696 # width of the capture region
 region_height = 180 # height of the capture region
-height_offset = 170 # higher number is looking higher :O
+height_offset = 190 # higher number is looking higher :O
 # scale values
 scale_factor = 1080 / monitor_height
 min_tile_pixels_top_offset = int(config["min_tile_pixels_top_offset_scaled"] // scale_factor)
@@ -175,8 +174,7 @@ while not keyboard.is_pressed(config['exit_key']):
             tileheight = tile_image.shape[0]
 
             result = cv2.matchTemplate(screenshot_np, tile_image, cv2.TM_CCOEFF_NORMED)
-            # this is the retarded part :/
-            # don't fix it if it ain't broke :D
+            # don't fix it if it ain't broke
             minimumdetectconfidence = ((config["diamond_tiles_min_confidence"] if tile_image.shape == tile_images[len(tile_images) - 1].shape else config["min_confidence"]) if config["detect_diamond_tiles"] == "true" else config["min_confidence"])
             locations = np.where(result >= minimumdetectconfidence)
 

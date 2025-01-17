@@ -6,5 +6,4 @@ numpy
 opencv-python
 psutil
 pyarmor
-pyautogui
 pywin32
