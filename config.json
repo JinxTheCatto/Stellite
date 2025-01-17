@@ -1,19 +1,23 @@
 {
-    "min_confidence": 0.64,
+    "min_confidence": 0.62,
     "min_tile_pixels_top_offset_scaled": 125,
     "tile_filename_suffix": "",
     "exit_key": "p",
     "keypress_holdtime": 0.05,
+    "max_lane_cooldown": 0.02,
+    "debug_positions": "true",
     
-    "show_debug_visuals": "false",
-    "console_window_ontop": "true",
-    "capture_fps": 144,
-    "color_mode": "gray",
     "use_white_tile": "true",
-    "viewbox_bgra_color_override": "false",
+    "white_tile_min_confidence": 0.62,
+
+    "use_battlestage_tile": "true",
+    "battlestage_tile_min_confidence": 0.62,
+
+    "use_diamond_tile": "false",
+    "diamond_tile_min_confidence": 0.95,
     
-    "use_lane_cooldown": "true",
-    "max_lane_cooldown": 0.03,
+    "console_window_ontop": "true",
+    "capture_fps": 200,
 
     "always_single_lanemode": "true",
     "single_lanemode_lanes": 5,
@@ -22,8 +26,5 @@
     "key_2": "f",
     "key_3": "j",
     "key_4": "k",
-    "key_5": "l",
-
-    "detect_diamond_tiles": "false",
-    "diamond_tiles_min_confidence": 0.95
+    "key_5": "l"
 }
