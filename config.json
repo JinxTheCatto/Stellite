@@ -10,7 +10,7 @@
     "use_white_tile": "true",
     "white_tile_min_confidence": 0.62,
 
-    "use_battlestage_tile": "true",
+    "use_battlestage_tile": "false",
     "battlestage_tile_min_confidence": 0.62,
 
     "use_diamond_tile": "false",
