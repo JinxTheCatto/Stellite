@@ -570,6 +570,13 @@ def prompt_instrument(song, default):
         if key.isdigit() and 1 <= int(key) <= len(available):
             return available[int(key) - 1]
 
+def prompt_queue_another(prompt="Queue another song? (Y/N)"):
+    print(prompt)
+    while True:
+        key = msvcrt.getwch().lower()
+        if key in ("y", "n"):
+            return key == "y"
+
 # Chart sync
 # The game has no way to tell us where the song is, so we line the chart up with the notes the screen reader sees.
 # Once it is locked the chart does the playing and every note seen on screen just keeps the clock lined up

@@ -183,6 +183,7 @@ if use_charts and not songs:
     use_charts = False
 
 current = (None, None, [], []) # chart, sync, actions, action times. swapped all at once so threads never see half of a song
+queued_charts = []
 last_instrument = str(config["instrument"])
 chart_offset = config["chart_timing_offset_ms"] / 1000 # minus is earlier, plus is later
 overdrive_offset = config["overdrive_timing_offset_ms"] / 1000 # extra on top of chart_offset, only for overdrive
@@ -215,27 +216,27 @@ def build_actions(chart):
     actions.sort(key=lambda action: (action[0], action[1]))
     return actions
 
-def pick_song():
-    global current, last_instrument
+def load_selected_chart():
+    global last_instrument
     song = charts.prompt_song(songs)
     if song is None:
-        if current[0] is not None:
-            print(Fore.YELLOW + f"Keeping {current[0]['name']}" + Fore.RESET)
-        else:
-            print(Fore.YELLOW + "No song picked, using screen reading only. Press " + str.upper(config["song_select_key"]) + " to pick one later" + Fore.RESET)
-        return
+        return None
     instrument = charts.prompt_instrument(song, last_instrument)
     if instrument is None:
-        return
+        return None
     last_instrument = instrument
     print(Fore.CYAN + "Reading the chart..." + Fore.RESET)
     try:
         chart = charts.load_chart(song, instrument, song_lengths)
     except Exception as e:
         print(Back.RED + Fore.WHITE + f"ERROR: Could not read the chart. {str(e)}" + Back.RESET + Fore.RESET)
-        return
+        return None
+    return chart
+
+def activate_chart(chart, now=None):
+    global current
     sync = charts.ChartSync(chart, config["chart_sync_tolerance_ms"] / 1000)
-    sync.resume(time.perf_counter())
+    sync.resume(time.perf_counter() if now is None else now)
     actions = build_actions(chart)
     current = (chart, sync, actions, [action[0] for action in actions])
 
@@ -250,6 +251,47 @@ def pick_song():
     if not enabled("use_overdrive"):
         print(Fore.YELLOW + "use_overdrive is off, overdrive wont be activated" + Fore.RESET)
     print(Fore.YELLOW + "Ready, go to Fortnite and turn caps lock on before the song starts" + Fore.RESET)
+
+def pick_song():
+    chart = load_selected_chart()
+    if chart is None:
+        if current[0] is not None:
+            print(Fore.YELLOW + f"Keeping {current[0]['name']}" + Fore.RESET)
+        else:
+            print(Fore.YELLOW + "No song picked, using screen reading only. Press " + str.upper(config["song_select_key"]) + " to pick one later" + Fore.RESET)
+        return
+    activate_chart(chart)
+
+def pick_initial_queue():
+    pick_song()
+    if current[0] is not None:
+        add_queued_songs()
+
+def add_queued_songs():
+    while charts.prompt_queue_another():
+        chart = load_selected_chart()
+        if chart is None:
+            break
+        queued_charts.append(chart)
+        print(Fore.GREEN + f"Added {chart['name']} - {charts.INSTRUMENT_NAMES[chart['instrument']]} to queue ({len(queued_charts)} queued)" + Fore.RESET)
+
+def pick_after_queue_finished():
+    global current, picking
+    picking = True
+    try:
+        if not charts.prompt_queue_another("Queue finished. Pick another song? (Y/N)"):
+            current = (None, None, [], [])
+            print(Fore.YELLOW + f"Queue is empty. Press {config['song_select_key']} later to choose a song." + Fore.RESET)
+            return
+        chart = load_selected_chart()
+        if chart is None:
+            current = (None, None, [], [])
+            print(Fore.YELLOW + f"No song selected. Press {config['song_select_key']} later to choose one." + Fore.RESET)
+            return
+        activate_chart(chart)
+        add_queued_songs()
+    finally:
+        picking = False
 
 def save_offset():
     # write the tuned timing into config.json without touching anything else in it
@@ -269,7 +311,7 @@ def save_offset():
 
 if use_charts:
     print(Fore.CYAN + Style.BRIGHT + "\nHow it plays" + Style.RESET_ALL)
-    print("  1. Pick the song and instrument below")
+    print("  1. Pick a song and instrument below; answer Y to queue more songs")
     print("  2. In Fortnite, turn caps lock on before the song starts")
     print("  3. Stellite plays from the screen for the first few notes, then syncs up and plays from the chart")
     print(Fore.CYAN + Style.BRIGHT + "Hotkeys (they work while Fortnite is open)" + Style.RESET_ALL)
@@ -281,7 +323,7 @@ if use_charts:
     print(f"Timing: notes play {describe_offset(chart_offset)}. Change it with {config['nudge_earlier_key']} and {config['nudge_later_key']} while playing, it saves by itself")
     if overdrive_offset:
         print(f"Overdrive plays another {describe_offset(overdrive_offset)} than the notes (overdrive_timing_offset_ms)")
-    pick_song()
+    pick_initial_queue()
 
 print(Fore.GREEN + f"WILL ONLY AUTOPLAY WHILE CAPS LOCK IS ON! CURRENT CAPSLOCK STATUS: " + ("On" if caps_lock() else "Off"))
 print(Fore.YELLOW + f"Resolution: {monitor_width}x{monitor_height}" + Fore.RESET)
@@ -587,6 +629,14 @@ try:
             message = sync.check(now, autoplaying)
             if message:
                 log(Fore.YELLOW + f"{message}, reading the screen until it syncs again" + Fore.RESET)
+                if message == "Song finished" and queued_charts:
+                    next_chart = queued_charts.pop(0)
+                    activate_chart(next_chart, now)
+                    chart, sync, actions, action_times = current
+                    log(Fore.CYAN + f"Starting next queued song: {chart['name']} ({len(queued_charts)} remaining)" + Fore.RESET)
+                elif message == "Song finished":
+                    pick_after_queue_finished()
+                    chart, sync, actions, action_times = current
 
         if use_charts and hotkey(config["song_select_key"]):
             picking = True

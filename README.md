@@ -52,7 +52,7 @@ Playing from the chart means:
 - Use Python 3.10 or newer (tested on 3.12)
 - Play Fortnite on windowed fullscreen, and preferably low quality rendering mode (this makes brightness match with what the match images use)
 - Use the setup.bat script to install dependencies
-- Run the start.bat script, pick your song and instrument (type to search, Tab autofills, Esc skips)
+- Run the start.bat script, pick a song and instrument (type to search, Tab autofills, Esc skips). Answer `Y` after each song to queue another; Stellite loads the next chart when the current chart ends. When the queue is empty, it asks whether you want to pick another song. Start each next song in Fortnite as usual
 - Turn caps lock on before the song starts, Stellite only plays while caps lock is on
 - If you get Goods instead of Perfects, press `-` while playing until they turn into Perfects (see [Timing](#timing))
 - Restart the program after altering the config file, if needed
