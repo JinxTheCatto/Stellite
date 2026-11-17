@@ -1,8 +1,9 @@
 {
     "min_confidence": 0.62,
+    "screen_learning_confidence": 0.55,
     "min_tile_pixels_top_offset_scaled": 125,
     "tile_filename_suffix": "",
-    "exit_key": "p",
+    "exit_key": "ctrl+q",
     "keypress_holdtime": 0.05,
     "max_lane_cooldown": 0.02,
     "debug_positions": "false",
@@ -39,8 +40,13 @@
     "overdrive_timing_offset_ms": 0,
 
     "show_overlay": "true",
+    "auto_detect_song": "true",
+    "screen_fine_tune": "true",
+    "record_screen": "true",
     "song_select_key": "[",
     "sync_key": "]",
+    "restart_key": "r",
+    "read_screen_key": "\\",
     "nudge_earlier_key": "-",
     "nudge_later_key": "="
 }

@@ -4,3 +4,5 @@ keyboard
 numpy
 opencv-python
 pywin32
+rapidocr-onnxruntime>=1.4,<2
+pillow

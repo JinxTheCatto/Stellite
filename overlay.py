@@ -22,7 +22,14 @@ COLORS = {
     "now": "#ffe566",
     "good": "#7dff9a",
 }
+LANE_COLORS = ("#46d369", "#ff5a65", "#ffd24a", "#4f9cff", "#ff9d45")
+OVERDRIVE_COLOR = "#ffffff"
 POSITION_FILE = os.path.join("data", "overlay.json")
+FONT_CHOICES = ("Ubuntu", "Bahnschrift", "Segoe UI") # first one that is installed wins
+FONT = "Segoe UI"
+CAPS_OFF_TEXT = "CAPS LOCK OFF\nnot playing\n(drag to move)"
+TOPMOST_SECONDS = 0.25 # how often the panel is pushed back above everything else
+TITLE_HEIGHT = 24 # the bar across the top with the song that is loaded
 
 GWL_EXSTYLE = -20
 WS_EX_LAYERED = 0x00080000
@@ -40,7 +47,7 @@ def load_position(width, height):
         y = max(0, min(screen_height - height, int(position["y"])))
         return x, y
     except Exception:
-        return screen_width - width - 28, 28
+        return 24, max(24, (screen_height - height) // 2)
 
 def save_position(x, y):
     try:
@@ -85,8 +92,8 @@ class Overlay:
         except queue.Full:
             pass
 
-    def show(self, big, small, color = "dim", big_color = "white"):
-        self.send(("text", big, small, color, big_color))
+    def show(self, big, small, color = "dim", big_color = "white", highway=None, title=""):
+        self.send(("text", big, small, color, big_color, highway, title))
 
     def set_clickthrough(self, enabled):
         self.send(("clickthrough", bool(enabled)))
@@ -104,23 +111,42 @@ class Overlay:
         root.attributes("-topmost", True)
         root.attributes("-transparentcolor", TRANSPARENT)
 
-        width, height = 280, 96
+        width, height = 356, 286 + TITLE_HEIGHT
         x, y = load_position(width, height)
         root.geometry(f"{width}x{height}+{x}+{y}")
 
-        try:
-            big_font = tkfont.Font(family="Segoe UI Semibold", size=32)
-            small_font = tkfont.Font(family="Segoe UI Semibold", size=12)
-        except tk.TclError:
-            big_font = tkfont.Font(size=32, weight="bold")
-            small_font = tkfont.Font(size=12, weight="bold")
+        global FONT
+        installed = set(tkfont.families())
+        FONT = next((family for family in FONT_CHOICES if family in installed), "Segoe UI")
+        big_font = tkfont.Font(family=FONT, size=22, weight="bold")
+        small_font = tkfont.Font(family=FONT, size=9, weight="bold")
+        title_font = tkfont.Font(family=FONT, size=9, weight="bold")
+
+        # the song that is loaded, across the top like a window title
+        title_bar = tk.Frame(root, bg="#0c0f15", height=TITLE_HEIGHT, highlightthickness=1, highlightbackground="#394252")
+        title_bar.pack(side="top", fill="x")
+        title_bar.pack_propagate(False)
+        title = tk.Label(title_bar, text="Stellite", font=title_font, fg=COLORS["white"], bg="#0c0f15", anchor="w")
+        title.pack(side="left", fill="both", expand=True, padx=8)
 
         shell = tk.Frame(root, bg=TRANSPARENT)
         shell.pack(fill="both", expand=True)
-        big = tk.Label(shell, text="-:--", font=big_font, fg=COLORS["dim"], bg=TRANSPARENT)
-        big.pack(anchor="center", pady=(6, 0))
-        small = tk.Label(shell, text="Stellite", font=small_font, fg=COLORS["dim"], bg=TRANSPARENT)
-        small.pack(anchor="center")
+        highway = tk.Canvas(
+            shell,
+            width=242,
+            height=286,
+            bg="#131720",
+            highlightthickness=1,
+            highlightbackground="#394252",
+        )
+        highway.pack(side="left", fill="y")
+        info = tk.Frame(shell, bg="#131720", width=114, height=286)
+        info.pack(side="left", fill="both", expand=True)
+        info.pack_propagate(False)
+        big = tk.Label(info, text="-:--", font=big_font, fg=COLORS["dim"], bg="#131720")
+        big.pack(anchor="center", pady=(88, 0))
+        small = tk.Label(info, text="Stellite", font=small_font, fg=COLORS["dim"], bg="#131720", wraplength=104, justify="center")
+        small.pack(anchor="center", pady=(8, 0))
 
         drag = {"x": 0, "y": 0}
         clickthrough = {"on": True}
@@ -138,7 +164,7 @@ class Overlay:
             if not clickthrough["on"]:
                 save_position(root.winfo_x(), root.winfo_y())
 
-        for widget in (root, shell, big, small):
+        for widget in (root, title_bar, title, shell, highway, info, big, small):
             widget.bind("<ButtonPress-1>", start_drag)
             widget.bind("<B1-Motion>", on_drag)
             widget.bind("<ButtonRelease-1>", end_drag)
@@ -154,36 +180,142 @@ class Overlay:
         self.ready.set()
 
         last_topmost = 0.0
+        shown = None
 
-        def poll():
-            nonlocal last_topmost
-            if self.closed:
-                root.destroy()
-                return
+        # no timer polling here, the loop wakes up the moment the bot sends a frame
+        while not self.closed:
             try:
-                while True:
-                    update = self.updates.get_nowait()
-                    if update[0] == "clickthrough":
-                        clickthrough["on"] = update[1]
-                        apply_style(hwnd, update[1])
-                    else:
-                        big.configure(text=update[1], fg=COLORS.get(update[4], update[4]))
-                        small.configure(text=update[2] if clickthrough["on"] else "drag to move, caps lock locks it", fg=COLORS.get(update[3], update[3]))
+                update = self.updates.get(timeout=0.01)
             except queue.Empty:
-                pass
+                update = None
+            # drain everything, but only draw the newest frame
+            frame = None
+            while update is not None:
+                if update[0] == "clickthrough":
+                    clickthrough["on"] = update[1]
+                    apply_style(hwnd, update[1])
+                    shown = None
+                else:
+                    frame = update
+                try:
+                    update = self.updates.get_nowait()
+                except queue.Empty:
+                    update = None
+            if frame is not None:
+                state = (frame[1:5], frame[6] if len(frame) > 6 else "")
+                if state != shown:
+                    shown = state
+                    title.configure(text=fit_text(state[1] or "Stellite", title_font, width - 20))
+                    big.configure(text=frame[1], fg=COLORS.get(frame[4], frame[4]))
+                    small.configure(text=frame[2] if clickthrough["on"] else CAPS_OFF_TEXT, fg=COLORS.get(frame[3], frame[3]) if clickthrough["on"] else "#ff5a65")
+                draw_highway(highway, frame[5])
 
-            # fortnite likes to cover it up, put it back on top every few seconds
+            # fortnite likes to cover it up, keep putting it back on top
             now = time.perf_counter()
-            if now - last_topmost >= 5.0:
+            if now - last_topmost >= TOPMOST_SECONDS:
                 last_topmost = now
                 try:
                     win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE | win32con.SWP_NOACTIVATE)
                 except Exception:
                     pass
-            root.after(50, poll)
-
-        root.after(50, poll)
-        root.mainloop()
+            root.update()
+        root.destroy()
         # tk has to be cleaned up on the thread that made it, otherwise python crashes on exit
-        root = shell = big = small = big_font = small_font = None
+        root = shell = highway = info = big = small = big_font = small_font = title_bar = title = title_font = None
         gc.collect()
+
+STAR = (0, -9, 2.5, -2.8, 9, -2.8, 4, 1.5, 5.8, 9, 0, 4.5, -5.8, 9, -4, 1.5, -9, -2.8, -2.5, -2.8)
+
+def fit_text(text, font, width):
+    # one line only: a name that is too long gets cut and ends in dots
+    if font.measure(text) <= width:
+        return text
+    while text and font.measure(text + "...") > width:
+        text = text[:-1]
+    return text.rstrip() + "..."
+
+def draw_highway(canvas, data):
+    # runs every frame, so the canvas items are kept and moved instead of being rebuilt
+    state = getattr(canvas, "highway_state", None)
+    if state is None:
+        state = canvas.highway_state = {"static": "", "held": None}
+    width = int(canvas["width"])
+    height = int(canvas["height"])
+    lanes = data["lanes"] if data else []
+    top = 36
+    hit_line = height - 43
+    left = 9
+
+    static = tuple(lanes) if data else None
+    if static != state["static"]:
+        canvas.delete("all")
+        state.update(static=static, held=None, ovals=[], stars=[], labels=[], used=[0, 0, 0], fills={}, texts={})
+        canvas.create_rectangle(1, 1, width - 1, height - 1, fill="#131720", outline="#394252")
+        if not lanes:
+            canvas.create_text(width / 2, height / 2, text="WAITING FOR SONG", fill=COLORS["dim"], font=(FONT, 10, "bold"))
+            return
+        lane_width = (width - 18) / len(lanes)
+        for lane, key in enumerate(lanes):
+            x0 = left + lane * lane_width
+            x1 = x0 + lane_width
+            canvas.create_rectangle(x0 + 1, top, x1 - 1, hit_line + 8, fill="#1c222d", outline="#333b49")
+            canvas.create_text((x0 + x1) / 2, 12, text=key.upper(), fill=LANE_COLORS[lane % len(LANE_COLORS)], font=(FONT, 9, "bold"))
+        canvas.create_line(left, hit_line, width - left, hit_line, fill=COLORS["white"], width=2)
+        canvas.create_text(width - 10, hit_line + 2, anchor="ne", text="PRESS", fill=COLORS["white"], font=(FONT, 7, "bold"))
+    if not lanes:
+        return
+    lane_width = (width - 18) / len(lanes)
+
+    held = tuple(sorted(set(data["held"])))
+    if held != state["held"]:
+        state["held"] = held
+        canvas.delete("held")
+        for lane in held:
+            if lane < 0 or lane >= len(lanes):
+                continue
+            x0 = left + lane * lane_width
+            x1 = x0 + lane_width
+            canvas.create_rectangle(x0 + 3, hit_line + 12, x1 - 3, height - 5, fill=LANE_COLORS[lane % len(LANE_COLORS)], outline="", tags="held")
+            canvas.create_text((x0 + x1) / 2, height - 14, text=lanes[lane].upper(), fill="#10141b", font=(FONT, 11, "bold"), tags="held")
+
+    ovals, stars, labels = state["ovals"], state["stars"], state["labels"]
+    fills, texts = state["fills"], state["texts"]
+    oval_count = star_count = label_count = 0
+    for lane, seconds, kind in data["notes"]:
+        if lane < 0 or lane >= len(lanes):
+            continue
+        center = left + lane * lane_width + lane_width / 2
+        y = hit_line - min(max(seconds, 0.0), 2.5) / 2.5 * (hit_line - top)
+        if kind == "overdrive":
+            if star_count == len(stars):
+                stars.append(canvas.create_polygon(*STAR, fill=OVERDRIVE_COLOR, outline=COLORS["white"], width=1))
+            points = [value + (y if index % 2 else center) for index, value in enumerate(STAR)]
+            canvas.coords(stars[star_count], *points)
+            star_count += 1
+        else:
+            if oval_count == len(ovals):
+                ovals.append(canvas.create_oval(0, 0, 0, 0, outline=COLORS["white"], width=1))
+            item = ovals[oval_count]
+            radius = 9 if kind == "hold" else 7
+            canvas.coords(item, center - radius, y - radius, center + radius, y + radius)
+            color = LANE_COLORS[lane % len(LANE_COLORS)]
+            if fills.get(item) != color:
+                fills[item] = color
+                canvas.itemconfigure(item, fill=color)
+            oval_count += 1
+        if label_count == len(labels):
+            labels.append(canvas.create_text(0, 0, fill=COLORS["white"], font=(FONT, 7, "bold")))
+        item = labels[label_count]
+        canvas.coords(item, center, y - 14)
+        text = f"{seconds:.1f}s"
+        if texts.get(item) != text:
+            texts[item] = text
+            canvas.itemconfigure(item, text=text)
+        label_count += 1
+
+    # park the spare items off screen, hiding them costs more than moving them
+    used = state["used"]
+    for pool, count, index in ((ovals, oval_count, 0), (stars, star_count, 1), (labels, label_count, 2)):
+        for item in pool[count:used[index]]:
+            canvas.coords(item, *([-100] * len(canvas.coords(item))))
+        used[index] = count
